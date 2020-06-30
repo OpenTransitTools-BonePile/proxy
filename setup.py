@@ -10,6 +10,7 @@ requires = [
     'ott.utils',
     'pystache',
     'pyramid',
+    'pyramid_tm',
     'waitress',
 ]
 

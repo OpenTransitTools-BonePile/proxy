@@ -1,8 +1,6 @@
 from pyramid.config import Configurator
 from pyramid.events import NewRequest
 
-import ott.utils.object_utils as obj
-
 import logging
 log = logging.getLogger(__file__)
 
@@ -30,7 +28,8 @@ def add_cors_headers_response_callback(event):
 
 
 def main(global_config, **settings):
-    """ This function returns a Pyramid WSGI application.
+    """
+    this function returns a Pyramid WSGI application.
     """
     # import pdb; pdb.set_trace()
     config = Configurator(settings=settings)
@@ -40,9 +39,9 @@ def main(global_config, **settings):
         from pyramid.paster import setup_logging
         setup_logging(settings['logging_config_file'])
 
-    import views
+    from . import views
     config.include(views.do_view_config)
-    config.scan('ott.map_server.pyramid')
+    config.scan('ott.proxy.pyramid')
 
     # CORS -- might not make this call in production (eliminate a bit of overheads, as CORS is handled by Apache)
     config.add_subscriber(add_cors_headers_response_callback, NewRequest)
