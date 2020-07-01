@@ -19,10 +19,16 @@ def do_view_config(cfg):
 def tilejson(request):
     log.info("tilejson")
     request.response.content_type = 'application/json'
-    # TODO: build the "http://localhost:51915" from the request object
-    tiles = "http://localhost:51915/tiles/{z}/{x}/{y}.pbf"
-    tiles = "http://localhost:8090/tiles/{z}/{x}/{y}.pbf"
-    #tiles = "https://api.maptiler.com/tiles/v3/{z}/{x}/{y}.pbf?key=iPpYk5aa9BhaiVdDqgek"
+
+    # TODO: make the following better...
+    tiles = "http://localhost:51915/{}"
+    tiles = "http://localhost:8090/{}"
+    tiles = "https://api.maptiler.com/tiles/v3/{z}/{x}/{y}.pbf?key=iPpYk5aa9BhaiVdDqgek"
+    tiles = "http://rj-dv-mapapp01:8090/{}"
+
+    if "{}" in tiles:
+        tiles = tiles.format("tiles/{z}/{x}/{y}.pbf")
+
     return {"TILES_URL": tiles}
 
 
