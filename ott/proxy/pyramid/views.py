@@ -8,23 +8,33 @@ log = logging.getLogger(__file__)
 cache_long = 500
 system_err_msg = base.ServerError()
 
-port = "55"
-tiles_url = "http://localhost:{}".format(port)
-
 
 def do_view_config(cfg):
-    cfg.add_route('home',  '/')
-    cfg.add_route('tiles', '/tiles')
+    cfg.add_route('tilejson',  '/tilejson')
+    cfg.add_route('tiles', '/tiles/{z}/{x}/{y}')
+    cfg.add_route('all',   '/*')
 
 
-@view_config(route_name='home', renderer='tilejson.mako', http_cache=cache_long)
-def home(request):
+@view_config(route_name='tilejson', renderer='tilejson.mako', http_cache=cache_long)
+def tilejson(request):
+    log.info("tilejson")
     request.response.content_type = 'application/json'
-    return {}
+    # TODO: build the "http://localhost:51915" from the request object
+    tiles = "http://localhost:51915/tiles/{z}/{x}/{y}.pbf"
+    tiles = "http://localhost:8090/tiles/{z}/{x}/{y}.pbf"
+    #tiles = "https://api.maptiler.com/tiles/v3/{z}/{x}/{y}.pbf?key=iPpYk5aa9BhaiVdDqgek"
+    return {"TILES_URL": tiles}
 
 
 @view_config(route_name='tiles', renderer='string', http_cache=cache_long)
 def tiles(request):
+    ret_val = request.__dict__
+    log.info(ret_val)
+    return ret_val
+
+
+@view_config(route_name='all', renderer='string', http_cache=cache_long)
+def all(request):
     ret_val = request.__dict__
     log.info(ret_val)
     return ret_val

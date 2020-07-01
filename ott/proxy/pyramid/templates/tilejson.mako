@@ -4,7 +4,7 @@
   "description": "A tileset showcasing all layers in OpenMapTiles. https://openmaptiles.org",
   "version": "3.11.0",
   "attribution": "<a href=\"https://www.openmaptiles.org/\" target=\"_blank\">&copy; OpenMapTiles<\/a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors<\/a>",
-  "tiles": ["/tiles/{z}/{x}/{y}.pbf"],
+  "tiles": ["${TILES_URL}"],
   "minzoom": 0,
   "maxzoom": 14,
   "bounds": [-180.0, -85.0511, 180.0, 85.0511],
