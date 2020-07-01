@@ -1,3 +1,4 @@
+import os
 from pyramid.config import Configurator
 from pyramid.events import NewRequest
 
@@ -27,12 +28,22 @@ def add_cors_headers_response_callback(event):
     event.request.add_response_callback(cors_headers)
 
 
+def template_dir(settings, dir_name='templates'):
+    if settings:
+        here = os.path.dirname(os.path.abspath(__file__))
+        mako_dir = os.path.join(here, dir_name) if dir_name else here
+        log.info("template directory: " + mako_dir)
+        settings['mako.directories'] = mako_dir
+
+
 def main(global_config, **settings):
     """
     this function returns a Pyramid WSGI application.
     """
     # import pdb; pdb.set_trace()
+    template_dir(settings)
     config = Configurator(settings=settings)
+    config.include('pyramid_mako')
 
     # logging config for pserve / wsgi
     if settings and 'logging_config_file' in settings:

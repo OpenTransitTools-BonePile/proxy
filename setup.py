@@ -11,6 +11,7 @@ requires = [
     'pystache',
     'pyramid',
     'pyramid_tm',
+    'pyramid_mako',
     'waitress',
 ]
 
